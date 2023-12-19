@@ -11,6 +11,8 @@ class Candidature extends Model
     protected $fillable = [
         'id_user',
         'id_formation',
+        'validation',
+        'archive',
     ];
 }
 

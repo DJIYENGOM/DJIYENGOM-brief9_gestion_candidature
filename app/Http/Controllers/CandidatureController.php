@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Candidature;
 use App\Http\Requests\StoreCandidatureRequest;
 use App\Http\Requests\UpdateCandidatureRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CandidatureController extends Controller
 {
@@ -13,7 +14,7 @@ class CandidatureController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Candidature::where('archive', false)->get());
     }
 
     /**
@@ -27,27 +28,42 @@ class CandidatureController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCandidatureRequest $request)
+    public function store($id_formation)
     {
-        //
+        $candidature = new Candidature();
+        $candidature->id_formation = $id_formation;
+        $candidature->id_user = Auth::user()->id;
+        $candidature->save();
+
+        return response()->json($candidature);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Candidature $candidature)
+  
+    public function validercandidature(Candidature $candidature)
     {
-        //
+        $candidature->validation = 'valide';
+        $candidature->update();
+
+        return response()->json($candidature);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Candidature $candidature)
+    public function refusercandidature(Candidature $candidature)
     {
-        //
+        $candidature->validation = 'non_valide';
+        $candidature->update();
+
+        return response()->json($candidature);
     }
 
+    public function listCandidatureValider()
+    {
+        return response()->json(Candidature::where('validation','valide' && 'archive', false )->get());
+    }
+
+    public function listCandidatureNonValider()
+    {
+        return response()->json(Candidature::where('validation','non_valide')->get());
+    }
     /**
      * Update the specified resource in storage.
      */

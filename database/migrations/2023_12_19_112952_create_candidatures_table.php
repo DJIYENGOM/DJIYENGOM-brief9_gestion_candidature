@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('candidatures', function (Blueprint $table) {
             $table->id();
+            $table->enum('validation',['valide','non_valide','en_cour'])->default('en_cour');
+            $table->boolean('archive')->default(false);
+
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_formation');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_formation')->references('id')->on('formations')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
