@@ -6,28 +6,40 @@ use App\Models\Candidature;
 use App\Http\Requests\StoreCandidatureRequest;
 use App\Http\Requests\UpdateCandidatureRequest;
 use Illuminate\Support\Facades\Auth;
+Use OpenApi\Annotations as OA ;
 
 class CandidatureController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+  
+         /**
+ * @OA\Get(
+ * path="/listCandidature",
+ *summary="cette route permet de lister toutes les candidatures",
+
+ *     @OA\Response(response="200", description="success",)
+ * )
+ */
     public function index()
     {
         return response()->json(Candidature::where('archive', false)->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+  
+       /**
+ * @OA\Post(
+ * path="'postuler/{id_formation}",
+ *summary="cette route permet de postuler à une formation (id_formation)",
+ *@OA\Parameter(
+*name="id_formation",
+*in="path",
+*required=true,
+*description="id_formation de la formation qu'on veut postuler",
+*@OA\Schema(type="integer")
+*),
 
-    /**
-     * Store a newly created resource in storage.
-     */
+ *     @OA\Response(response="200", description="success",)
+ * )
+ */
     public function store($id_formation)
     {
         $candidature = new Candidature();
@@ -38,7 +50,21 @@ class CandidatureController extends Controller
         return response()->json($candidature);
     }
 
-  
+       /**
+ * @OA\Post(
+ * path="/validercandidature/{candidature}",
+ *summary="cette route permet de valider une candidature (id_candidature)",
+ *@OA\Parameter(
+*name="candidature",
+*in="path",
+*required=true,
+*description="candidature correspond à l'id du candidature qu'on veut valider",
+*@OA\Schema(type="integer")
+*),
+
+ *     @OA\Response(response="200", description="success",)
+ * )
+ */
     public function validercandidature(Candidature $candidature)
     {
         $candidature->validation = 'valide';
@@ -47,6 +73,22 @@ class CandidatureController extends Controller
         return response()->json($candidature);
     }
 
+
+        /**
+ * @OA\Post(
+ * path="/refusercandidature/{candidature}",
+ *summary="cette route permet de refuser une candidature (id_candidature)",
+ *@OA\Parameter(
+*name="candidature",
+*in="path",
+*required=true,
+*description="candidature correspond à l'id du candidature qu'on veut refuser",
+*@OA\Schema(type="integer")
+*),
+
+ *     @OA\Response(response="200", description="success",)
+ * )
+ */
     public function refusercandidature(Candidature $candidature)
     {
         $candidature->validation = 'non_valide';
@@ -55,11 +97,27 @@ class CandidatureController extends Controller
         return response()->json($candidature);
     }
 
+            /**
+ * @OA\Get(
+ * path="/listCandidatureValider",
+ *summary="cette route permet de lister tous les candidatures qui sont validées",
+
+ *     @OA\Response(response="200", description="success",)
+ * )
+ */
     public function listCandidatureValider()
     {
         return response()->json(Candidature::where('validation','valide' && 'archive', false )->get());
     }
 
+                /**
+ * @OA\Get(
+ * path="/listCandidatureNonValider",
+ *summary="cette route permet de lister tous les candidatures qui sont refusées",
+
+ *     @OA\Response(response="200", description="success",)
+ * )
+ */
     public function listCandidatureNonValider()
     {
         return response()->json(Candidature::where('validation','non_valide')->get());

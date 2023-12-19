@@ -1,0 +1,195 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/listCandidature": {
+            "get": {
+                "summary": "cette route permet de lister toutes les candidatures",
+                "operationId": "778ffb150c2a9b2592384ffd1d10ed72",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "'postuler/{id_formation}": {
+            "post": {
+                "summary": "cette route permet de postuler à une formation (id_formation)",
+                "operationId": "8e0deaff1138217f6694a9bd54b1ac1a",
+                "parameters": [
+                    {
+                        "name": "id_formation",
+                        "in": "path",
+                        "description": "id_formation de la formation qu'on veut postuler",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/validercandidature/{candidature}": {
+            "post": {
+                "summary": "cette route permet de valider une candidature (id_candidature)",
+                "operationId": "0c27dc060c7ae257d8b5735ca7b8b397",
+                "parameters": [
+                    {
+                        "name": "candidature",
+                        "in": "path",
+                        "description": "candidature correspond à l'id du candidature qu'on veut valider",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/refusercandidature/{candidature}": {
+            "post": {
+                "summary": "cette route permet de refuser une candidature (id_candidature)",
+                "operationId": "0a6f0b30856d3611d31ec7c77144878e",
+                "parameters": [
+                    {
+                        "name": "candidature",
+                        "in": "path",
+                        "description": "candidature correspond à l'id du candidature qu'on veut refuser",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/listCandidatureValider": {
+            "get": {
+                "summary": "cette route permet de lister tous les candidatures qui sont validées",
+                "operationId": "3a43f0c41206debaf08467a5ae05d726",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/listCandidatureNonValider": {
+            "get": {
+                "summary": "cette route permet de lister tous les candidatures qui sont refusées",
+                "operationId": "16997abae23ea376dcb18e20276e9eaf",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/listFormation": {
+            "get": {
+                "summary": "cette route permet de lister toutes les  formations",
+                "operationId": "7018cb3c03a177674402d82757f302df",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/ajoutFormation": {
+            "post": {
+                "tags": [
+                    "Formations"
+                ],
+                "summary": "Ajouter une formation",
+                "description": "Ajoute une nouvelle formation.",
+                "operationId": "61cc22a0f1a8e196704aee301f1609c6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Nom de la formation"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Formation ajoutée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Formation ajoutée"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/updateFormation/{formation}": {
+            "post": {
+                "summary": "cette route permet de modifier une formation",
+                "operationId": "368833bba73e95c05fd7713690a38b2e",
+                "parameters": [
+                    {
+                        "name": "formation",
+                        "in": "path",
+                        "description": "formation correspond à l'id de la formation qu'on veut modifier",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        }
+    }
+}

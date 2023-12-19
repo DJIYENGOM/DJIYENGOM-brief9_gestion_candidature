@@ -9,21 +9,53 @@ use App\Http\Requests\UpdateFormationRequest;
 
 class FormationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+           /**
+ * @OA\Get(
+ * path="/listFormation",
+ *summary="cette route permet de lister toutes les  formations",
+
+ *     @OA\Response(response="200", description="success",)
+ * )
+ */
     public function index()
     {
         return response()->json(Formation::where('archive', false)->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
+ /**
+     * @OA\Post(
+     *     path="/ajoutFormation",
+     *     tags={"Formations"},
+     *     summary="Ajouter une formation",
+     *     description="Ajoute une nouvelle formation.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nom"},
+     *             @OA\Property(property="nom", type="string", example="Nom de la formation")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Formation ajoutée avec succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Formation ajoutée")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Non authentifié"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Non autorisé"
+     *     ),
+     *     security={{"bearerAuth": {}}}
+     * )
      */
     public function create(Request $request)
     {
 
-       // dd($request);
         $request->validate([
             'nom' => 'required',
         ]);
@@ -37,15 +69,6 @@ class FormationController extends Controller
     }
 
 
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreFormationRequest $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      */
@@ -53,28 +76,21 @@ class FormationController extends Controller
     {
         return response()->json($formation);
     }
+     /**
+ * @OA\Post(
+ * path="/updateFormation/{formation}",
+ *summary="cette route permet de modifier une formation",
+ *@OA\Parameter(
+*name="formation",
+*in="path",
+*required=true,
+*description="formation correspond à l'id de la formation qu'on veut modifier",
+*@OA\Schema(type="integer")
+*),
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Formation $formation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update( Request $request, Formation $formation)
-    // {
-    //     $request->validated($request->all());
-    //     $formation->nom = $request->input('nom');
-    //     $formation->status = $request->input('status');
-    //     $formation->update();
-
-    //     return response()->json($formation);
-    // }
-
+ *     @OA\Response(response="200", description="success",)
+ * )
+ */
 
     public function update(Request $request, Formation $formation)
 {
