@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class MonMiddleware
+class MiddlewareUser
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,7 @@ class MonMiddleware
            
             $role = $user->role;
 
-            if ($role == 'admin') {
+            if ($role == 'user') {
                 return $next($request);
             } else {
                 return response()->json(['message' => 'Autorisation refusée']);
