@@ -8,10 +8,10 @@ use App\Http\Controllers\FormationController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('logout', 'logout');
-    Route::post('refresh', 'refresh');
-    //comment
+      Route::post('register', 'register');
+      Route::post('logout', 'logout');
+      Route::post('refresh', 'refresh');
+    //
 });
 
 Route::middleware(['auth:api', 'MonMiddleware'])->group(function () {

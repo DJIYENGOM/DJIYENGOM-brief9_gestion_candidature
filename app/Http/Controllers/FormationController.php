@@ -9,18 +9,35 @@ use App\Http\Requests\UpdateFormationRequest;
 
 class FormationController extends Controller
 {
-           /**
+      /**
  * @OA\Get(
- * path="/listFormation",
- *summary="cette route permet de lister toutes les  formations",
-
- *     @OA\Response(response="200", description="success",)
+ *     path="/listFormation",
+ *     tags={"Formations"},
+ *     summary="Liste des formations",
+ *     description="Récupère la liste des formations non archivées.",
+ *     @OA\Response(
+ *         response=200,
+ *         description="Liste des formations récupérée avec succès",
+ *         @OA\JsonContent(
+ *             type="array",
+ *             @OA\Items(ref="#/components/schemas/Formation")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Non authentifié"
+ *     ),
+ *     @OA\Response(
+ *         response=403,
+ *         description="Non autorisé"
+ *     ),
+ *     security={}
  * )
  */
-    public function index()
-    {
-        return response()->json(Formation::where('archive', false)->get());
-    }
+public function index()
+{
+    return response()->json(Formation::where('archive', false)->get());
+}
 
  /**
      * @OA\Post(
