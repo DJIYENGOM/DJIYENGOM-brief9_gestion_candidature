@@ -29,6 +29,7 @@ Route::middleware(['auth:api', 'MonMiddleware'])->group(function () {
 Route::middleware(['auth:api', 'MiddlewareUser'])->group(function () {
   Route::post('postuler/{id_formation}', [CandidatureController::class, 'store']);
 });
+
 Route::get('listFormation', [FormationController::class, 'index']);
 
 

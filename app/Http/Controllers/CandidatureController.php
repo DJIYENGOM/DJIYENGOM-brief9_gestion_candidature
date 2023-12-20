@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Formation;
+use App\Models\User;
 
 use App\Models\Candidature;
 use App\Http\Requests\StoreCandidatureRequest;
@@ -19,10 +21,16 @@ class CandidatureController extends Controller
  *     @OA\Response(response="200", description="success",)
  * )
  */
-    public function index()
-    {
-        return response()->json(Candidature::where('archive', false)->get());
-    }
+public function index()
+{
+    $candidatures = Candidature::with(['formation:id,nom', 'user:id,name,email'])
+                                ->where('archive', false)
+                                ->get();
+
+    return response()->json(['candidatures' => $candidatures]);
+}
+
+
 
   
        /**
@@ -122,19 +130,5 @@ class CandidatureController extends Controller
     {
         return response()->json(Candidature::where('validation','non_valide')->get());
     }
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCandidatureRequest $request, Candidature $candidature)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Candidature $candidature)
-    {
-        //
-    }
+    
 }

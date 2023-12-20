@@ -19,4 +19,9 @@ class Formation extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function candidatures()
+    {
+        return $this->hasMany(Candidature::class, 'id_formation'); 
+    }
 }
