@@ -14,5 +14,22 @@ class Candidature extends Model
         'validation',
         'archive',
     ];
+
+    public function candidatures()
+    {
+        return $this->hasMany(Formation::class);
+    }
+
+  
+    public function formation()
+    {
+        return $this->belongsTo(Formation::class, 'id_formation'); 
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
 }
 

@@ -69,6 +69,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Formation::class);
     }
 
+    public function candidatures()
+    {
+        return $this->hasMany(Candidature::class, 'id_user'); 
+    }
+
     public function hasRole($roles)
     {
         return in_array($this->role, $roles);

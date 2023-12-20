@@ -123,9 +123,42 @@ public function index()
 
     return response()->json($formation);
 } 
-    /**
-     * Remove the specified resource from storage.
-     */
+   /**
+ * @OA\Delete(
+ *     path="/deleteFormation/{formation}",
+ *     operationId="deleteFormation",
+ *     tags={"Formation"},
+ *     summary="Archive une formation",
+ *     description="Archive une formation en mettant à jour le champ 'archive' à true.",
+ *     @OA\Parameter(
+ *         name="formation",
+ *         in="path",
+ *         description="ID de la formation à archiver",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Formation archivée avec succès",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="id", type="integer", example=1),
+ *             @OA\Property(property="nom", type="string", example="Nom de la formation"),
+ *             @OA\Property(property="status", type="string", example="ouvert"),
+ *             @OA\Property(property="archive", type="boolean", example=true),
+ *             @OA\Property(property="created_at", type="string", example="2023-12-19T12:00:00.000000Z"),
+ *             @OA\Property(property="updated_at", type="string", example="2023-12-19T12:30:00.000000Z")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Formation non trouvée"
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Erreur interne du serveur"
+ *     )
+ * )
+ */
     public function destroy(Formation $formation)
     {
         $formation->archive = true;
